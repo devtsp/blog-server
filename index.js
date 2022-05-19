@@ -12,10 +12,10 @@ const PORT = process.env.PORT || 3500;
 connectDB();
 
 //MIDDLEWARE
-app.use(logger);
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(logger);
 
 //ROUTES
 app.use(express.static(path.join(__dirname, 'public')));
