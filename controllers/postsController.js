@@ -40,6 +40,7 @@ async function createPost(req, res) {
 async function deletePost(req, res) {
 	if (!req?.body?.id)
 		return res.status(400).json({ error: 'Post ID required' });
+
 	const post = await Post.findOne({ _id: req.body.id });
 	if (!post)
 		return res
@@ -48,6 +49,7 @@ async function deletePost(req, res) {
 	const result = await post.deleteOne({ _id: req.body.id });
 	res.json(result);
 }
+
 async function updatePost(req, res) {
 	if (!req?.body?.id)
 		return res.status(400).json({ error: 'Post ID required' });
