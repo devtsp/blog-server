@@ -1,2 +1,3 @@
 # blog-server
- Server side application for a blog 
+
+Server side application for a blog
