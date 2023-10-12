@@ -1,0 +1,23 @@
+version: "3.8"
+
+services: 
+  app-container:
+    build: . # Path to Dockerfile
+    ports:
+      - "3500:3500"
+    links: 
+      - mongo-container
+    depends_on:
+      - mongo-container
+
+  mongo-container: 
+    image: mongo:jammy
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - ./development.env
+
+volumes:
+  mongo-data:

@@ -1,0 +1,11 @@
+version: "3.8"
+
+services: 
+  app-container: 
+    build:
+      context: . 
+      args: 
+        NODE_ENV: production
+    env_file:
+      - ./production.env
+    command: node index.js

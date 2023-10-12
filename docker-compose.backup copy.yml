@@ -1,0 +1,26 @@
+version: "3.8"
+
+services: 
+  app-container:
+    build: . # Path to Dockerfile
+    ports:
+      - "3500:3500"
+    volumes:
+      - ./:/app # use host current directory as volume in the docker work dir
+      - /app/node_modules # hack to not overwrite container's node_modules with local files
+    env_file:
+      - ./development.env
+    links: 
+      - mongo-container
+
+  mongo-container: 
+    image: mongo:jammy
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    env_file:
+      - ./development.env
+
+volumes:
+  mongo-data:

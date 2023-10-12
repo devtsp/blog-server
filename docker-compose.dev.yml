@@ -1,0 +1,14 @@
+version: "3.8"
+
+services: 
+  app-container:
+    build:
+      context: . 
+      args: 
+        NODE_ENV: development
+    env_file:
+      - ./development.env
+    volumes:
+      - ./:/app # use host current directory as volume in the docker work dir
+      - /app/node_modules # hack to not overwrite container's node_modules with local files
+    command: npm run dev

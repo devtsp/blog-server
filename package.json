@@ -1,13 +1,25 @@
 {
 	"scripts": {
-		"start": "node index",
-		"dev": "nodemon index",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node index.js",
+		"dev": "nodemon -L index.js",
+		"docker:network:create": "docker network create app-network",
+		"docker:build:app": "docker build -t node-app-image .",
+		"docker:mongo:dev": "docker run -d -p 27017:27017 --name mongo-container --network app-network --env-file development.env mongo:jammy",
+		"docker:app:dev": "docker run -d -v %cd%:/app:ro -v /app/node_modules -p 3500:3500 --name app-container --network app-network -e NODE_ENV=development --env-file development.env node-app-image",
+		"docker:logs:app": "docker logs -f app-container",
+		"docker:inspect:app": "docker exec -it app-container sh",
+        "docker:up:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+        "docker:down:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml down",
+        "docker:up:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build",
+        "docker:down:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml down"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",
 		"mongoose": "^6.3.3"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.1"
 	}
 }

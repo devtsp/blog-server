@@ -1,8 +1,11 @@
-require('dotenv').config();
+const path = require('path');
+const envFilePath =  path.join(__dirname, `${process.env.NODE_ENV}.env`)
+
+require('dotenv').config({ path: envFilePath});
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const path = require('path');
 
 const connectDB = require('./config/dbConn');
 const logger = require('./middleware/logEvents');
@@ -12,7 +15,7 @@ const PORT = process.env.PORT || 3500;
 connectDB();
 
 //MIDDLEWARE
-app.use(cors({ origin: 'https://blog-client-ten.vercel.app' }));
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(logger);
